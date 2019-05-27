@@ -1,28 +1,31 @@
 ﻿using PathTracerTest.Materials;
 using PathTracerTest.MathUtils;
 using PathTracerTest.SceneObjects;
+using System;
 using System.Collections.Generic;
 
 namespace PathTracerTest.Raytracer
 {
-    public class World : Singleton<World>, SceneObject
+    public class World : Singleton<World>, ISceneObject
     {
-        public List<SceneObject> sceneObjects = new List<SceneObject>();
+        public List<ISceneObject> sceneObjects = new List<ISceneObject>();
         public Color SkyboxColorA = new Color(.40f, 0.63f, .99f);
         public Color SkyboxColorB = new Color(0.9f, 0.9f, 1f);
 
         public World()
         {
-            sceneObjects = new List<SceneObject>()
+            sceneObjects = new List<ISceneObject>()
             {
-                new Sphere(new Vector3(0, 0f, -1), 0.5f, new Lambertian(new Color(0.9f, 0.4f, 0.2f))),
-                new Sphere(new Vector3(0, -100.5f, -1), 100f, new Lambertian(new Color(0.8f, 0.8f, 0.8f)))
+                new Sphere(new Vector3(0, 0f, -0.75f), 0.21f, new TexturedLambertian(new Texture("testTexture.ppm"))),
+                new Sphere(new Vector3(0, -200.2f, -1), 200f, new Metallic(new Color(0.7f, 0.7f, 0.7f), 0.1f))
             };
 
-            for (int i = 0; i <= 8; ++i)
-            {
-                sceneObjects.Add(new Sphere(new Vector3(-1.6f + (i * 0.45f), 0.75f, -1), 0.2f, new Metallic(new Color(.8f, .8f, .8f), 0.2f)));
-            }
+            for (int x = -1; x <= 1; ++x)
+                for (int y = -1; y <= 1; ++y)
+                {
+                    if (x * .5f == 0 && ((y * .5f) - 1 == -0.5f || (y * .5f) - 1 == -1)) continue;
+                    sceneObjects.Add(new Sphere(new Vector3(x * .5f, 0f, (y * .5f) - 1), 0.2f, new Metallic(new Color(0.7f, 0.7f, 0.7f), 0.1f)));
+                }
         }
 
         public Color GetSkyboxAtPos(float t)

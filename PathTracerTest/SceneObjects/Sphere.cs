@@ -5,7 +5,7 @@ using System;
 
 namespace PathTracerTest.SceneObjects
 {
-    public class Sphere : SceneObject
+    public class Sphere : ISceneObject
     {
         public Vector3 center;
         public float radius;

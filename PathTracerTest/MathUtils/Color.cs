@@ -24,5 +24,10 @@
         {
             this.a = a;
         }
+
+        public Vector3 ToVector3()
+        {
+            return new Vector3(x, y, z);
+        }
     }
 }

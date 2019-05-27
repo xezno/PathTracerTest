@@ -10,24 +10,24 @@ namespace PathTracerTest
 {
     class Program
     {
+        static List<int> totalRaysComplete = new List<int>();
         static void Main(string[] args)
         {
             IImageWriter imageWriter = new PPMImageWriter();
-            int sizeX = 960, sizeY = 480, sampleCount = 32, threadCount = 4;
+            int sizeX = 512, sizeY = 512, sampleCount = 64, threadCount = 4;
 
             float ratio = sizeX / sizeY; // 2 for 200x100
 
-            Camera camera = new Camera(90.0f, ratio);
+            Camera camera = new Camera(110.0f, ratio);
             List<Thread> threads = new List<Thread>();
 
             Dictionary<int, Color> data = new Dictionary<int, Color>();
             RayValueContainer.instance.colors = new List<Dictionary<int, Color>>();
 
-            DateTime startTime = DateTime.Now;
-
             for (int i = 0; i < threadCount; ++i)
             {
                 RayValueContainer.instance.colors.Add(new Dictionary<int, Color>());
+                totalRaysComplete.Add(0);
             }
 
             for (int i = 0; i < threadCount; ++i)
@@ -38,6 +38,8 @@ namespace PathTracerTest
                 Console.WriteLine($"Thread {i} started");
             }
 
+            DateTime startTime = DateTime.Now;
+
             bool threadsDone = false;
             while (!threadsDone)
             {
@@ -45,7 +47,13 @@ namespace PathTracerTest
                 for (int i = 0; i < threadCount; ++i)
                 {
                     if (threads[i].IsAlive) threadsDone = false;
+
+                    Console.CursorTop = threadCount + i;
+                    Console.CursorLeft = 0;
+                    Console.WriteLine($"Thread {i} total rays: {totalRaysComplete[i]} / {(sizeX * sizeY * sampleCount) / threadCount}");
                 }
+
+                System.Threading.Thread.Sleep(250);
             }
 
 
@@ -66,6 +74,7 @@ namespace PathTracerTest
 
             DateTime endTime = DateTime.Now;
             Console.WriteLine($"Render took {(endTime - startTime).TotalSeconds}s");
+            Console.WriteLine($"Average time per ray: {(endTime - startTime).TotalSeconds / (sizeX * sizeY * sampleCount)}s ({1 / ((endTime - startTime).TotalSeconds / (sizeX * sizeY * sampleCount))} rays/sec)");
             Console.Write("Press any key to exit... ");
             Console.ReadLine();
         }
@@ -74,6 +83,7 @@ namespace PathTracerTest
         {
             RayThreadData rayThreadData = (RayThreadData)rayThreadData_;
             Random r = new Random();
+            int rayCount = 0;
             for (float y = rayThreadData.sizeY - 1; y >= 0; y--)
             {
                 for (float x = 0; x < rayThreadData.sizeX; x++)
@@ -90,6 +100,7 @@ namespace PathTracerTest
                             float v = (y + aaY) / rayThreadData.sizeY;
                             Ray ray = new Ray(rayThreadData.camera.origin, rayThreadData.camera.lowerLeftCorner + u * rayThreadData.camera.horizontal + v * rayThreadData.camera.vertical - rayThreadData.camera.origin);
                             col += ray.GetColor();
+                            rayCount++;
                         }
 
                         col /= rayThreadData.sampleCount;
@@ -98,10 +109,10 @@ namespace PathTracerTest
                             (float)Math.Sqrt(col.y),
                             (float)Math.Sqrt(col.z));
 
-                        //var lowerLeftCalc = new Vector3(lowerLeftCorner.X + u * horizontal.X, lowerLeftCorner.X + v * vertical.Y, lowerLeftCorner.Z);
                         RayValueContainer.instance.colors[rayThreadData.thread].Add(index, new Color(col));
                     }
                 }
+                totalRaysComplete[rayThreadData.thread] = rayCount;
             }
         }
     }

@@ -18,7 +18,14 @@ namespace PathTracerTest.MathUtils
             this.z = z;
         }
 
-        public static Vector3 operator *(Vector3 a, float b) => new Vector3(a.x * b, a.y * b, a.z * b);
+        public Vector3(Vector2 a, float z = 0)
+        {
+            this.x = a.x;
+            this.y = a.y;
+            this.z = z;
+        }
+
+        public static Vector3 operator * (Vector3 a, float b) => new Vector3(a.x * b, a.y * b, a.z * b);
 
         public static Vector3 operator + (Vector3 a, float b) => new Vector3(a.x + b, a.y + b, a.z + b);
 
@@ -27,6 +34,8 @@ namespace PathTracerTest.MathUtils
         public static Vector3 operator * (float b, Vector3 a) => new Vector3(a.x * b, a.y * b, a.z * b);
 
         public static Vector3 operator / (Vector3 a, float b) => new Vector3(a.x / b, a.y / b, a.z / b);
+
+        public static Vector3 operator * (Vector3 a, Vector3 b) => new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
 
         public static Vector3 operator + (Vector3 a, Vector3 b) => new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
 

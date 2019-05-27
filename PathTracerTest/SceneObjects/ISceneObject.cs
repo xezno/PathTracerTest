@@ -2,7 +2,7 @@
 
 namespace PathTracerTest.SceneObjects
 {
-    public interface SceneObject
+    public interface ISceneObject
     {
         bool GetHit(Ray ray, float tMin, float tMax, out RayHit rayHit);
     }
