@@ -36,7 +36,7 @@ namespace PathTracerTest.Raytracer
             {
                 if (depth < 50 && rayHit.material.Scatter(this, rayHit, out Vector3 attenuation, out Ray scattered))
                 {
-                    return new Color(attenuation) * scattered.GetColor(depth + 1);
+                    return new Color(attenuation) * ((scattered?.GetColor(depth + 1)) ?? new Color(1.0f, 1.0f, 1.0f));
                 }
                 else
                 {

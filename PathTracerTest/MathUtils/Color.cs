@@ -7,8 +7,20 @@
         public float b { get => z; set => z = value; }
 
         public float a;
-               
-        public static Color operator * (Color a, Color b) => new Color(new Vector3(a.x * b.x, a.y * b.y, a.z * b.z));
+
+        public static Color operator *(Color a, Color b) => new Color(new Vector3(a.x * b.x, a.y * b.y, a.z * b.z));
+
+        public static Color operator +(Color a, float b) => new Color(a.x + b, a.y + b, a.z + b);
+
+        public static Color operator +(float b, Color a) => new Color(a.x + b, a.y + b, a.z + b);
+
+        public static Color operator *(float b, Color a) => new Color(a.x * b, a.y * b, a.z * b);
+
+        public static Color operator /(Color a, float b) => new Color(a.x / b, a.y / b, a.z / b);
+
+        public static Color operator +(Color a, Color b) => new Color(a.x + b.x, a.y + b.y, a.z + b.z);
+
+        public static Color operator -(Color a, Color b) => new Color(a.x - b.x, a.y - b.y, a.z - b.z);
 
         public Color(Vector3 value) : base(value.x, value.y, value.z)
         {
@@ -29,5 +41,7 @@
         {
             return new Vector3(x, y, z);
         }
+
+        public new SFML.Graphics.Color ToSFMLColor() => new SFML.Graphics.Color((byte)(x * 255), (byte)(y * 255), (byte)(z * 255), (byte)(a * 255));
     }
 }

@@ -9,7 +9,7 @@ namespace PathTracerTest.Materials
         public Vector3 albedo;
         public float fuzziness;
 
-        public Metallic(Vector3 albedo, float fuzziness = 1.0f)
+        public Metallic(Vector3 albedo, float fuzziness = 0.1f)
         {
             this.albedo = albedo;
             this.fuzziness = fuzziness;

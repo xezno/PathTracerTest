@@ -34,6 +34,7 @@ namespace PathTracerTest.SceneObjects
                     rayHit.t = temp;
                     rayHit.p = ray.PointAtParameter(rayHit.t);
                     rayHit.normal = (rayHit.p - center) / radius;
+                    rayHit.textureCoords = new Vector2(rayHit.normal.x, rayHit.normal.y);
                     rayHit.material = material;
                     return true;
                 }
@@ -43,6 +44,7 @@ namespace PathTracerTest.SceneObjects
                     rayHit.t = temp;
                     rayHit.p = ray.PointAtParameter(rayHit.t);
                     rayHit.normal = (rayHit.p - center) / radius;
+                    rayHit.textureCoords = new Vector2(rayHit.normal.x, rayHit.normal.y);
                     rayHit.material = material;
                     return true;
                 }

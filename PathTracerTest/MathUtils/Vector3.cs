@@ -27,6 +27,12 @@ namespace PathTracerTest.MathUtils
 
         public static Vector3 operator * (Vector3 a, float b) => new Vector3(a.x * b, a.y * b, a.z * b);
 
+        public static Vector3 Cross(Vector3 a, Vector3 b) => new Vector3(
+            (a.y * b.z) - (a.z * b.y),
+            (a.z * b.x) - (a.x * b.z),
+            (a.x * b.y) - (a.y * b.x)
+            );
+
         public static Vector3 operator + (Vector3 a, float b) => new Vector3(a.x + b, a.y + b, a.z + b);
 
         public static Vector3 operator + (float b, Vector3 a) => new Vector3(a.x + b, a.y + b, a.z + b);
@@ -48,6 +54,28 @@ namespace PathTracerTest.MathUtils
             return (1f - t) * a + (b * t);
         }
 
+        public static Vector3 Max(Vector3 a, Vector3 b)
+        {
+            if (a.Length > b.Length) return a;
+            return b;
+        }
+
+        public static Vector3 Min(Vector3 a, Vector3 b)
+        {
+            if (a.Length < b.Length) return a;
+            return b;
+        }
+
         public Vector3 ToUnitVector() => this / this.Length;
+
+        public SFML.Graphics.Color ToSFMLColor()
+        {
+            return new SFML.Graphics.Color((byte)(x * 255), (byte)(y * 255), (byte)(z * 255), 255);
+        }
+
+        public override string ToString()
+        {
+            return $"{x}, {y}, {z}";
+        }
     }
 }

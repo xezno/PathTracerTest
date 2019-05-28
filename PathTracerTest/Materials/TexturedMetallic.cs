@@ -7,15 +7,15 @@ namespace PathTracerTest.Materials
     public class TexturedMetallic : IMaterial
     {
         public Texture albedo;
-        public float textureSize = 1.5f;
+        public float textureSize = 1.0f;
         public Vector2 textureOffset;
         public float fuzziness;
 
-        public TexturedMetallic(Texture albedo, float fuzziness = 1.0f)
+        public TexturedMetallic(Texture albedo, float fuzziness = 0.95f)
         {
             this.albedo = albedo;
             this.fuzziness = fuzziness;
-            this.textureOffset = new Vector2(.35f, .35f);
+            this.textureOffset = /*new Vector2(.35f, .35f)*/ new Vector2(0, 0);
         }
 
         public Vector3 RandomInUnitSphere()

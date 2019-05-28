@@ -8,24 +8,24 @@ namespace PathTracerTest.Materials
     {
         public Texture albedo;
         public Vector3 emission;
-        public float textureSize = 1.5f;
+        public float textureSize = 1.0f;
         public Vector2 textureOffset;
 
         public TexturedLambertian(Texture albedo)
         {
             this.albedo = albedo;
             this.emission = new Vector3(1, 1, 1);
-            this.textureOffset = new Vector2(.35f, .35f);
+            this.textureOffset = /*new Vector2(.35f, .35f)*/ new Vector2(0, 0);
         }
 
         public Vector3 RandomInUnitSphere()
         {
             Random r = new Random();
-            Vector3 p = new Vector3(0, 0, 0);
-            do
+            Vector3 p = 2.0f * new Vector3((float)r.NextDouble(), (float)r.NextDouble(), (float)r.NextDouble()) - new Vector3(1f, 1f, 1f);
+            while (p.SquaredLength >= 1.0f)
             {
                 p = 2.0f * new Vector3((float)r.NextDouble(), (float)r.NextDouble(), (float)r.NextDouble()) - new Vector3(1f, 1f, 1f);
-            } while (p.SquaredLength >= 1.0f);
+            }
             return p;
         }
         public bool Scatter(Ray ray, RayHit rayHit, out Vector3 attenuation, out Ray scattered)

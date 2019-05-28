@@ -8,6 +8,7 @@ namespace PathTracerTest.Raytracer
         public float t;
         public Vector3 p;
         public Vector3 normal;
+        public Vector2 textureCoords;
         public IMaterial material;
     }
 }
