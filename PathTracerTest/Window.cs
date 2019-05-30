@@ -11,12 +11,13 @@ namespace PathTracerTest
         private Sprite sprite;
         private Texture texture;
         private RenderWindow _sfmlWindow;
-        public Window(uint width, uint height)
+        public Window(uint width, uint height, float windowScale)
         {
-            _sfmlWindow = new RenderWindow(new VideoMode(width, height), "PathTracerTest");
+            _sfmlWindow = new RenderWindow(new VideoMode((uint)(width * windowScale), (uint)(height * windowScale)), "PathTracerTest");
             texture = new Texture(new Image(width, height));
             texture.Smooth = true;
             sprite = new Sprite(texture);
+            sprite.Scale = new SFML.System.Vector2f(windowScale, windowScale);
         }
 
         public void SetScreenData(int sizeX, int sizeY, List<Dictionary<int, MathUtils.Color>> data)

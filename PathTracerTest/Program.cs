@@ -15,9 +15,11 @@ namespace PathTracerTest
         static void Main(string[] args)
         {
             IImageWriter imageWriter = new PPMImageWriter();
-            int sizeX = 960, sizeY = 960, sampleCount = 16, threadCount = 4;
+            int sizeX = 256, sizeY = 256, sampleCount = 16, threadCount = 4;
 
-            window = new Window((uint)sizeX, (uint)sizeY);
+            float windowScale = 2.0f;
+
+            window = new Window((uint)sizeX, (uint)sizeY, windowScale);
 
             float ratio = sizeX / sizeY; // 2 for 200x100
 

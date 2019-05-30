@@ -18,7 +18,7 @@ namespace PathTracerTest.Raytracer
             {
                 //new Triangle(new Vector3[] { new Vector3(2, -2, -3), new Vector3(2, 2, -3), new Vector3(-2, -2, -3)}, new TexturedLambertian(new Texture("testTexture.ppm"))),
                 //new Triangle(new Vector3[] { new Vector3(-2, 2, -3), new Vector3(2, 2, -3), new Vector3(-2, -2, -3)}, new TexturedLambertian(new Texture("testTexture.ppm"))),
-                new Sphere(new Vector3(0, 0f, -0.75f), 0.21f, new TexturedLambertian(TextureContainer.instance.LoadTexture("billiardBall.ppm"))),
+                new Sphere(new Vector3(0, 0f, -0.75f), 0.51f, new TexturedLambertian(TextureContainer.instance.LoadTexture("billiardBall.ppm"))),
                 new Sphere(new Vector3(0, -200.2f, -1), 200f, new Metallic(new Vector3(0.8f, 0.8f, 0.8f), 0.05f))
             };
 
@@ -26,7 +26,7 @@ namespace PathTracerTest.Raytracer
                 for (int y = -1; y <= 1; ++y)
                 {
                     if (x * .5f == 0 && ((y * .5f) - 1 == -0.5f || (y * .5f) - 1 == -1)) continue;
-                    sceneObjects.Add(new Sphere(new Vector3(x * .5f, 0f, (y * .5f) - 1), 0.2f, new TexturedLambertian(TextureContainer.instance.LoadTexture("billiardBall.ppm"))));
+                    sceneObjects.Add(new Sphere(new Vector3(x * .5f, 0f, (y * .5f) - 1), 0.5f, new TexturedLambertian(TextureContainer.instance.LoadTexture("billiardBall.ppm"))));
                 }
         }
 
